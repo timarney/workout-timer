@@ -7,7 +7,7 @@ const App = () => (
   <Router>
     <div>
       <Route exact path="/" component={Home} />
-      <Route exact path="/edit/:id" component={EditForm} />
+      <Route exact path="/edit/:id?" component={EditForm} />
     </div>
   </Router>
 );

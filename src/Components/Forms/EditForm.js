@@ -18,18 +18,27 @@ const onSubmit = async values => {
   window.alert(msg);
 };
 
-const load = async () => {
-  return {
-    label: "Workout 1",
-    exercises: items
-  };
+const load = async id => {
+  if (!id) {
+    //load empty form
+    const data = {
+      label: "",
+      exercises: [{ label: "", duration: "" }]
+    };
+    return data;
+  }
+
+  return items[0];
 };
 
 class FormDisplay extends Component {
   state = { data: {} };
   async componentDidMount() {
+    const { id } = this.props;
+    console.log(id);
+
     this.setState({ loading: true });
-    const data = await load();
+    const data = await load(id);
     this.setState({ loading: false, data });
   }
 
@@ -118,9 +127,11 @@ class FormDisplay extends Component {
 
 const EditForm = ({ match }) => (
   <div>
-    <h3>ID: {match.params.id} -</h3>
-    <FormDisplay />
-    <Link to="/">Home</Link>
+    <h3>ID: {match.params.id}</h3>
+    <FormDisplay id={match.params.id} />
+    <Link to="/" className="edit">
+      Home
+    </Link>
   </div>
 );
 

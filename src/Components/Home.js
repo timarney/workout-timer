@@ -10,8 +10,8 @@ import { speak } from "../lib/speak";
 import { Link } from "react-router-dom";
 import { items } from "../items";
 
-q.setItems(items);
-//
+// this will be pulled via ajax
+q.setItems(items[0].exercises);
 
 let total = secondsToMinutes(countdown.totalTime(items));
 
@@ -124,7 +124,11 @@ class Home extends Component {
             {btnText}
           </button>
         </div>
-        <Link className="edit" to="/edit/1">
+        <Link className="edit" to="/edit">
+          Add Workout
+        </Link>
+
+        <Link className="edit" to="/edit/0">
           Edit Workout
         </Link>
       </div>
