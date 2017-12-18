@@ -8,15 +8,7 @@ import { secondsToMinutes } from "../lib/timeConversion";
 import { countdown } from "../lib/countdown";
 import { speak } from "../lib/speak";
 import { Link } from "react-router-dom";
-
-// this will be dynamic
-let items = [
-  { label: "Exercise 1", duration: 30 },
-  { label: "Break", duration: 10 },
-  { label: "Exercise 2", duration: 30 },
-  { label: "Break", duration: 10 },
-  { label: "Exercise 3", duration: 30 }
-];
+import { items } from "../items";
 
 q.setItems(items);
 //
@@ -42,7 +34,7 @@ class Home extends Component {
     btnText: "Stop",
     nextUp: ""
   };
-
+  speak = false;
   didChangeExercise = false;
   didChangeNext = false;
 
@@ -59,7 +51,7 @@ class Home extends Component {
     q.run(this, countdown);
 
     try {
-      speak({
+      this.speak = speak({
         start: () => {
           countdown.startTimer();
           this.setState({ btnText: "Stop" });
@@ -69,10 +61,16 @@ class Home extends Component {
           countdown.pauseTimer();
           this.setState({ btnText: "Go" });
         }
-      }).start();
+      });
+
+      this.speak.start();
     } catch (e) {
       console.log("SpeechRecognition not enabled");
     }
+  }
+
+  componentWillUnmount() {
+    this.speak.stop();
   }
 
   componentWillUpdate(nextProps, nextState) {

@@ -9,6 +9,8 @@ export function speak(cb) {
     " | "
   )};`;
 
+  let error = false;
+
   const recognition = new SpeechRecognition();
   const speechRecognitionList = new SpeechGrammarList();
   speechRecognitionList.addFromString(grammar, 1);
@@ -57,8 +59,10 @@ export function speak(cb) {
   };
 
   recognition.onend = function() {
-    console.log("Speech recognition service disconnected");
-    recognition.start();
+    console.log("Speech recognition service disconnected", error);
+    if (!error) {
+      recognition.start();
+    }
   };
 
   recognition.onnomatch = function(event) {
@@ -67,6 +71,8 @@ export function speak(cb) {
 
   recognition.onerror = function(event) {
     console.log("onerror", event);
+    error = true;
+    recognition.stop();
   };
 
   return recognition;
