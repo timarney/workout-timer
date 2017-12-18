@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AnimateOnChange from "react-animate-on-change";
-import { secondsToMinutes } from "../util/timeConversion";
+import { secondsToMinutes } from "../lib/timeConversion";
 
 class Current extends Component {
   render() {

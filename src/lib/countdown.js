@@ -37,6 +37,7 @@ export const countdown = {
       cb(time, this.totalTimeRemaining(q, time));
     };
 
+    // update roughly once per second -> event loop ;)
     this.interval = setInterval(() => {
       if (!this.pause) time -= 1;
       calc(time);

@@ -1,4 +1,4 @@
-import { secondsToMinutes, minutesToSeconds } from "../util/timeConversion";
+import { secondsToMinutes, minutesToSeconds } from "../lib/timeConversion";
 
 describe("converts time", () => {
   it("should covert to minutes", () => {

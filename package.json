@@ -1,11 +1,16 @@
 {
   "name": "timer",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
+  "private": false,
   "dependencies": {
+    "final-form": "^3.0.0",
+    "final-form-arrays": "^1.0.0",
     "react": "^16.2.0",
     "react-animate-on-change": "^1.0.1",
     "react-dom": "^16.2.0",
+    "react-final-form": "^2.0.0",
+    "react-final-form-arrays": "^1.0.1",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17"
   },
   "scripts": {

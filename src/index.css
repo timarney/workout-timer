@@ -121,3 +121,10 @@ body {
   display:flex;
   justify-content: center;
 }
+
+.edit{
+  margin-top:1rem;
+  display: flex;
+  justify-content: center;
+  color:#666666;
+}
