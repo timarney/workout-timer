@@ -10,7 +10,6 @@ body {
 }
 
 .app {
-  
   max-width: 600px;
   display: flex;
   transition: all 5s ease;
@@ -118,3 +117,7 @@ body {
   margin-bottom: 1rem;
 }
 
+.note{
+  display:flex;
+  justify-content: center;
+}

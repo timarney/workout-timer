@@ -99,17 +99,25 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="app">
-        <Current
-          currentRemaining={currentRemaining}
-          didChangeExercise={this.didChangeExercise}
-          label={label}
-        />
-        <Totals totalTimeRemaining={totalTimeRemaining} />
-        <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
-        <button className="stopStart btn" onClick={this.startStop}>
-          {btnText}
-        </button>
+      <div>
+        <p className="note">
+          Try saying: "<strong>start</strong>" or "<strong>go</strong>" "<strong
+          >
+            pause
+          </strong>" or "<strong>stop</strong>"
+        </p>
+        <div className="app">
+          <Current
+            currentRemaining={currentRemaining}
+            didChangeExercise={this.didChangeExercise}
+            label={label}
+          />
+          <Totals totalTimeRemaining={totalTimeRemaining} />
+          <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
+          <button className="stopStart btn" onClick={this.startStop}>
+            {btnText}
+          </button>
+        </div>
       </div>
     );
   }
