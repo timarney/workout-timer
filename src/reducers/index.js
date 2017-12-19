@@ -31,7 +31,13 @@ const mainReducer = (state = mainInitialState, action) => {
 const itemsIntialState = { ...items };
 
 const itemsReducer = (state = itemsIntialState, action) => {
-  return state;
+  switch (action.type) {
+    case "UPDATE_WORKOUT":
+      const id = `w${action.payload.id}`;
+      return Object.assign({}, state, { [id]: action.payload.values });
+    default:
+      return state;
+  }
 };
 
 export const rootReducer = combineReducers({

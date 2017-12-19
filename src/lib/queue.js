@@ -14,7 +14,8 @@ export const queue = {
     clearInterval(this.countdown.interval);
 
     store.subscribe(() => {
-      const { pause } = store.getState();
+      const { pause } = store.getState().main;
+
       if (pause) {
         this.countdown.pauseTimer();
       } else {
