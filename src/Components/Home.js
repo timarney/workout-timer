@@ -60,7 +60,7 @@ export class Home extends Component {
           Add Workout
         </Link>
 
-        <Link className="edit" to="/edit/0">
+        <Link className="edit" to="/edit/1">
           Edit Workout
         </Link>
       </div>

@@ -28,7 +28,7 @@ const mainReducer = (state = mainInitialState, action) => {
   }
 };
 
-const itemsIntialState = [...items];
+const itemsIntialState = { ...items };
 
 const itemsReducer = (state = itemsIntialState, action) => {
   return state;

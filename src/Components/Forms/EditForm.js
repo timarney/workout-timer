@@ -10,7 +10,7 @@ class FormDisplay extends Component {
   state = { data: {} };
   componentDidMount() {
     const { id, items } = this.props;
-    const data = Object.assign({}, items[id]);
+    const data = Object.assign({}, items[`w${id}`]);
 
     if (id) {
       this.setState({ data });

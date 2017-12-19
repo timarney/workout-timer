@@ -9,7 +9,7 @@ import { queue } from "./lib/queue";
 import { speak } from "./lib/speak";
 
 const store = createStore(rootReducer);
-const i = store.getState().items[0].exercises;
+const i = store.getState().items["w1"].exercises;
 
 queue.init(i, store, { startIndex: 0 });
 
@@ -23,7 +23,7 @@ const commands = speak({
   }
 });
 
-//commands.start();
+commands.start();
 
 render(<Root store={store} />, document.getElementById("root"));
 registerServiceWorker();
