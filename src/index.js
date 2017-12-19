@@ -10,7 +10,7 @@ import { speak } from "./lib/speak";
 
 const store = createStore(main);
 const items = store.getState().items[0].exercises;
-queue.init(items, store, 2);
+queue.init(items, store, { startIndex: 0 });
 
 //this will be moved
 const commands = speak({

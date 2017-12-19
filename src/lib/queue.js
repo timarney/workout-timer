@@ -7,10 +7,10 @@ export const queue = {
   current: 0,
   countdown,
   dispatch: () => {},
-  init: function(arr, store, startIndex) {
+  init: function(arr, store, options = {startIndex: 0}) {
     this.items = arr;
     this.dispatch = store.dispatch;
-    this.current = startIndex;
+    this.current = options.startIndex;
     clearInterval(this.countdown.interval);
 
     store.subscribe(() => {
