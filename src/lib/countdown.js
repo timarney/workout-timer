@@ -29,6 +29,7 @@ export const countdown = {
   },
 
   timer: function(time, cb, q) {
+    
     const calc = time => {
       if (time <= 0) {
         clearInterval(this.interval);

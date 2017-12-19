@@ -1,6 +1,6 @@
 import React from "react";
-import Home from "./Components/Home";
-import EditForm from "./Components/Forms/EditForm";
+import Home from "./Home";
+import EditForm from "./forms/EditForm";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App = () => (

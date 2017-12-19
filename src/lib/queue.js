@@ -3,7 +3,7 @@ export const q = {
   items: [],
   maxItems: 1, //how many items to batch at a time
   current: 0,
-  finished: () => {},
+  dispatch: () => {},
   setItems: function(arr) {
     this.items = arr;
   },
@@ -28,7 +28,7 @@ export const q = {
 
     return false;
   },
-  run(obj, countdown) {
+  run(countdown) {
     const self = this;
 
     this.doAction(() => {
@@ -38,23 +38,35 @@ export const q = {
         i.duration,
         (time, totalRemaining) => {
           const nextUp = this.items[self.current];
+          const label = typeof nextUp !== "undefined" ? nextUp["label"] : "";
 
-          const label =
-            typeof nextUp !== "undefined" ? nextUp["label"] : "";
-
-          obj.setState({
-            label: i.label,
-            currentRemaining: time,
-            totalTimeRemaining: totalRemaining,
-            nextUp: label
+          this.dispatch({
+            type: "INTERVAL",
+            payload: {
+              label: i.label,
+              currentRemaining: time,
+              totalTimeRemaining: totalRemaining,
+              nextUp: label
+            }
           });
 
           if (time === 0) {
-            this.run(obj, countdown);
+            this.run(countdown);
           }
         },
         self
       );
+    });
+  },
+
+  finished() {
+    this.dispatch({
+      type: "INTERVAL",
+      payload: {
+        label: "Done",
+        currentRemaining: "",
+        totalTimeRemaining: ""
+      }
     });
   }
 };

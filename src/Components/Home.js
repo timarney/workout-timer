@@ -3,17 +3,9 @@ import "../App.css";
 import Totals from "./Totals";
 import NextUp from "./NextUp";
 import Current from "./Current";
-import { q } from "../lib/queue";
-import { secondsToMinutes } from "../lib/timeConversion";
-import { countdown } from "../lib/countdown";
 import { speak } from "../lib/speak";
 import { Link } from "react-router-dom";
-import { items } from "../items";
-
-// this will be pulled via ajax
-q.setItems(items[0].exercises);
-
-let total = secondsToMinutes(countdown.totalTime(items));
+import { connect } from "react-redux";
 
 const Note = () => {
   return (
@@ -25,41 +17,20 @@ const Note = () => {
   );
 };
 
-class Home extends Component {
-  state = {
-    label: "ready",
-    currentRemaining: "0",
-    totalTime: total,
-    totalTimeRemaining: total,
-    btnText: "Stop",
-    nextUp: ""
-  };
+export class Home extends Component {
   speak = false;
   didChangeExercise = false;
   didChangeNext = false;
 
   componentDidMount() {
-    q.finished = () => {
-      let txt = `Done`;
-      this.setState({
-        label: txt,
-        currentRemaining: "",
-        totalTimeRemaining: ""
-      });
-    };
-
-    q.run(this, countdown);
-
+    const { dispatch } = this.props;
     try {
       this.speak = speak({
         start: () => {
-          countdown.startTimer();
-          this.setState({ btnText: "Stop" });
+          dispatch({ type: "START" }, null);
         },
         pause: () => {
-          console.log("here pause");
-          countdown.pauseTimer();
-          this.setState({ btnText: "Go" });
+          dispatch({ type: "START" }, null);
         }
       });
 
@@ -74,8 +45,8 @@ class Home extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { label: nextLabel, nextUp: next } = nextState;
-    const { label, nextUp } = this.state;
+    const { label: nextLabel, nextUp: next } = nextProps;
+    const { label, nextUp } = this.props;
 
     this.didChangeExercise = false;
     this.didChangeNext = false;
@@ -90,24 +61,18 @@ class Home extends Component {
   }
 
   startStop = () => {
-    const pause = !countdown.pause;
-    if (pause) {
-      countdown.pauseTimer();
-      this.setState({ btnText: "Go" });
-    } else {
-      countdown.startTimer();
-      this.setState({ btnText: "Stop" });
-    }
+    const { dispatch } = this.props;
+    dispatch({ type: "START-STOP" }, null);
   };
 
   render() {
     const {
       label,
+      pause,
       currentRemaining,
       totalTimeRemaining,
-      btnText,
       nextUp
-    } = this.state;
+    } = this.props;
 
     return (
       <div>
@@ -121,7 +86,7 @@ class Home extends Component {
           <Totals totalTimeRemaining={totalTimeRemaining} />
           <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
           <button className="stopStart btn" onClick={this.startStop}>
-            {btnText}
+            {pause === true ? "GO" : "STOP"}
           </button>
         </div>
         <Link className="edit" to="/edit">
@@ -136,4 +101,14 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    pause: state.pause,
+    label: state.label,
+    currentRemaining: state.currentRemaining,
+    totalTimeRemaining: state.totalTimeRemaining,
+    nextUp: state.nextUp
+  };
+};
+
+export default connect(mapStateToProps)(Home);
