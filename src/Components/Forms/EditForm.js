@@ -4,43 +4,23 @@ import Styles from "./Styles";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
-import { items } from "../../items";
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const onSubmit = async values => {
-  await sleep(300);
-  const msg = `SUBMIT NOT CONNECTED TO SAVE YET \n ${JSON.stringify(
-    values,
-    0,
-    2
-  )}`;
-  window.alert(msg);
-};
-
-const load = async id => {
-  if (!id) {
-    //load empty form
-    const data = {
-      label: "",
-      exercises: [{ label: "", duration: "" }]
-    };
-    return data;
-  }
-
-  return items[0];
-};
+import { connect } from "react-redux";
 
 class FormDisplay extends Component {
   state = { data: {} };
-  async componentDidMount() {
-    const { id } = this.props;
-    console.log(id);
+  componentDidMount() {
+    const { id, items } = this.props;
+    const data = Object.assign({}, items[id]);
 
-    this.setState({ loading: true });
-    const data = await load(id);
-    this.setState({ loading: false, data });
+    if (id) {
+      this.setState({ data });
+    }
   }
+
+  onSubmit = values => {
+    const { dispatch, id } = this.props;
+    dispatch({ type: "UPDATE_WORKOUT", payload: { id, values } });
+  };
 
   render() {
     return (
@@ -48,7 +28,7 @@ class FormDisplay extends Component {
         <Styles>
           <Form
             initialValues={this.state.data}
-            onSubmit={onSubmit}
+            onSubmit={this.onSubmit}
             mutators={{
               ...arrayMutators
             }}
@@ -128,11 +108,19 @@ class FormDisplay extends Component {
 const EditForm = ({ match }) => (
   <div>
     <h3>ID: {match.params.id}</h3>
-    <FormDisplay id={match.params.id} />
+    <ConnectedForm id={match.params.id} />
     <Link to="/" className="edit">
       Home
     </Link>
   </div>
 );
+
+const mapStateToProps = state => {
+  return {
+    items: state.items
+  };
+};
+
+const ConnectedForm = connect(mapStateToProps)(FormDisplay);
 
 export default EditForm;

@@ -1,20 +1,11 @@
 import React, { Component } from "react";
 import "../App.css";
+import HomeNote from "./HomeNote";
 import Totals from "./Totals";
 import NextUp from "./NextUp";
 import Current from "./Current";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
-const Note = () => {
-  return (
-    <p className="note">
-      Try saying: "<strong>start</strong>" or "<strong>go</strong>" "<strong>
-        pause
-      </strong>" or "<strong>stop</strong>"
-    </p>
-  );
-};
 
 export class Home extends Component {
   didChangeExercise = false;
@@ -52,7 +43,7 @@ export class Home extends Component {
 
     return (
       <div>
-        <Note />
+        <HomeNote />
         <div className="app">
           <Current
             currentRemaining={currentRemaining}
@@ -79,11 +70,7 @@ export class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    pause: state.pause,
-    label: state.label,
-    currentRemaining: state.currentRemaining,
-    totalTimeRemaining: state.totalTimeRemaining,
-    nextUp: state.nextUp
+    ...state.main
   };
 };
 

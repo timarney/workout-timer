@@ -4,13 +4,14 @@ import "./index.css";
 import Root from "./components/Root";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore } from "redux";
-import { main } from "./reducers";
+import { rootReducer } from "./reducers";
 import { queue } from "./lib/queue";
 import { speak } from "./lib/speak";
 
-const store = createStore(main);
-const items = store.getState().items[0].exercises;
-queue.init(items, store, { startIndex: 0 });
+const store = createStore(rootReducer);
+const i = store.getState().items[0].exercises;
+
+queue.init(i, store, { startIndex: 0 });
 
 //this will be moved
 const commands = speak({
@@ -22,7 +23,7 @@ const commands = speak({
   }
 });
 
-commands.start();
+//commands.start();
 
 render(<Root store={store} />, document.getElementById("root"));
 registerServiceWorker();

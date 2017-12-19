@@ -1,10 +1,9 @@
-
 import { items } from "../items";
+import { combineReducers } from "redux";
 
 // this will be pulled via ajax
 
-const initialState = {
-  items,
+const mainInitialState = {
   pause: false,
   label: "ready",
   currentRemaining: "0",
@@ -13,7 +12,7 @@ const initialState = {
   nextUp: ""
 };
 
-export const main = (state = initialState, action) => {
+const mainReducer = (state = mainInitialState, action) => {
   switch (action.type) {
     case "INTERVAL":
       return Object.assign({}, state, action.payload);
@@ -28,3 +27,23 @@ export const main = (state = initialState, action) => {
       return state;
   }
 };
+
+const itemsIntialState = [...items];
+
+const itemsReducer = (state = itemsIntialState, action) => {
+  return state;
+};
+
+export const rootReducer = combineReducers({
+  items: itemsReducer,
+  main: mainReducer
+});
+
+/*
+const msg = `SUBMIT NOT CONNECTED TO SAVE YET \n ${JSON.stringify(
+      values,
+      0,
+      2
+    )}`;
+    window.alert(msg);
+*/
