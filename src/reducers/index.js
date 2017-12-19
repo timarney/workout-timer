@@ -1,4 +1,10 @@
+
+import { items } from "../items";
+
+// this will be pulled via ajax
+
 const initialState = {
+  items,
   pause: false,
   label: "ready",
   currentRemaining: "0",

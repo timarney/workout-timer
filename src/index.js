@@ -5,25 +5,24 @@ import Root from "./components/Root";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore } from "redux";
 import { main } from "./reducers";
-import { q } from "./lib/queue";
-import { countdown } from "./lib/countdown";
-import { items } from "./items";
-let store = createStore(main);
+import { queue } from "./lib/queue";
+import { speak } from "./lib/speak";
 
-// this will be pulled via ajax
-q.setItems(items[0].exercises);
-q.dispatch = store.dispatch;
+const store = createStore(main);
+const items = store.getState().items[0].exercises;
+queue.init(items, store, 2);
 
-store.subscribe(() => {
-  const { pause } = store.getState();
-  if (pause) {
-    countdown.pauseTimer();
-  } else {
-    countdown.startTimer();
+//this will be moved
+const commands = speak({
+  start: () => {
+    store.dispatch({ type: "START" }, null);
+  },
+  pause: () => {
+    store.dispatch({ type: "STOP" }, null);
   }
 });
 
-q.run(countdown);
+commands.start();
 
 render(<Root store={store} />, document.getElementById("root"));
 registerServiceWorker();

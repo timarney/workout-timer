@@ -7,35 +7,14 @@ export const countdown = {
   startTimer: function() {
     this.pause = false;
   },
-  totalTime: function(items) {
-    let time = 0;
-    items.forEach(item => {
-      time += item.duration;
-    });
-    return time;
-  },
-  totalTimeRemaining: function(q, currentTime) {
-    let total = 0;
-
-    q.items.forEach((item, index) => {
-      if (index === q.current - 1) {
-        total += currentTime;
-      } else if (index >= q.current) {
-        total += item.duration;
-      }
-    });
-
-    return total;
-  },
-
-  timer: function(time, cb, q) {
-    
+  timer: function(time, cb) {
     const calc = time => {
       if (time <= 0) {
+        console.log("clear interval");
         clearInterval(this.interval);
       }
 
-      cb(time, this.totalTimeRemaining(q, time));
+      cb(time);
     };
 
     // update roughly once per second -> event loop ;)
@@ -44,7 +23,7 @@ export const countdown = {
       calc(time);
     }, 1000);
 
-    cb(time, this.totalTimeRemaining(q, time));
+    cb(time);
 
     return this;
   }

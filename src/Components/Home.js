@@ -3,7 +3,6 @@ import "../App.css";
 import Totals from "./Totals";
 import NextUp from "./NextUp";
 import Current from "./Current";
-import { speak } from "../lib/speak";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -18,31 +17,8 @@ const Note = () => {
 };
 
 export class Home extends Component {
-  speak = false;
   didChangeExercise = false;
   didChangeNext = false;
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    try {
-      this.speak = speak({
-        start: () => {
-          dispatch({ type: "START" }, null);
-        },
-        pause: () => {
-          dispatch({ type: "START" }, null);
-        }
-      });
-
-      this.speak.start();
-    } catch (e) {
-      console.log("SpeechRecognition not enabled");
-    }
-  }
-
-  componentWillUnmount() {
-    this.speak.stop();
-  }
 
   componentWillUpdate(nextProps, nextState) {
     const { label: nextLabel, nextUp: next } = nextProps;

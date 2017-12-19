@@ -1,17 +1,34 @@
+import { countdown } from "../lib/countdown";
+
 // queue
-export const q = {
+export const queue = {
   items: [],
   maxItems: 1, //how many items to batch at a time
   current: 0,
+  countdown,
   dispatch: () => {},
-  setItems: function(arr) {
+  init: function(arr, store, startIndex) {
     this.items = arr;
+    this.dispatch = store.dispatch;
+    this.current = startIndex;
+    clearInterval(this.countdown.interval);
+
+    store.subscribe(() => {
+      const { pause } = store.getState();
+      if (pause) {
+        this.countdown.pauseTimer();
+      } else {
+        this.countdown.startTimer();
+      }
+    });
+
+    this.run();
   },
   doAction: function(cb) {
     let items = this.getItems();
 
     if (items === false) {
-      console.log("done");
+      console.log("no items remain");
       this.finished();
       return;
     }
@@ -19,46 +36,43 @@ export const q = {
     cb(items);
   },
   getItems: function() {
-    let arr = this.items.slice(this.current, this.maxItems + this.current);
+    const arr = this.items.slice(this.current, this.maxItems + this.current);
     this.current += this.maxItems;
 
-    if (arr.length >= 1) {
-      return arr;
-    }
+    if (arr.length >= 1) return arr;
 
     return false;
   },
-  run(countdown) {
-    const self = this;
+  updateStatus(time) {
+    const i = this.items[this.current - 1];
+    const label = i.label;
+    const nextUp = this.items[this.current];
+
+    this.dispatch({
+      type: "INTERVAL",
+      payload: {
+        label,
+        currentRemaining: time,
+        totalTimeRemaining: this.totalTimeRemaining(time),
+        nextUp: typeof nextUp !== "undefined" ? nextUp["label"] : ""
+      }
+    });
+
+    if (time === 0) {
+      //goto next item in the queue
+      this.run();
+    }
+  },
+  run() {
+    const i =
+      this.current >= 1
+        ? this.items[this.current - 1]
+        : this.items[this.current];
 
     this.doAction(() => {
-      const i = this.items[self.current - 1];
-
-      countdown.timer(
-        i.duration,
-        (time, totalRemaining) => {
-          const nextUp = this.items[self.current];
-          const label = typeof nextUp !== "undefined" ? nextUp["label"] : "";
-
-          this.dispatch({
-            type: "INTERVAL",
-            payload: {
-              label: i.label,
-              currentRemaining: time,
-              totalTimeRemaining: totalRemaining,
-              nextUp: label
-            }
-          });
-
-          if (time === 0) {
-            this.run(countdown);
-          }
-        },
-        self
-      );
+      this.countdown.timer(i.duration, this.updateStatus.bind(this));
     });
   },
-
   finished() {
     this.dispatch({
       type: "INTERVAL",
@@ -68,5 +82,24 @@ export const q = {
         totalTimeRemaining: ""
       }
     });
+  },
+  totalTimeRemaining: function(time) {
+    let total = 0;
+    this.items.forEach((item, index) => {
+      if (index === this.current - 1) {
+        total += time;
+      } else if (index >= this.current) {
+        total += item.duration;
+      }
+    });
+
+    return total;
+  },
+  totalTime: function() {
+    let time = 0;
+    this.items.forEach(item => {
+      time += item.duration;
+    });
+    return time;
   }
 };
