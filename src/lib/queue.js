@@ -7,8 +7,9 @@ export const queue = {
   current: 0,
   countdown,
   dispatch: () => {},
-  init: function(arr, store, options = {startIndex: 0}) {
+  init: function(arr, store, options = { startIndex: 0 }) {
     this.items = arr;
+
     this.dispatch = store.dispatch;
     this.current = options.startIndex;
     clearInterval(this.countdown.interval);
@@ -48,7 +49,6 @@ export const queue = {
     const i = this.items[this.current - 1];
     const label = i.label;
     const nextUp = this.items[this.current];
-
     this.dispatch({
       type: "INTERVAL",
       payload: {
@@ -88,9 +88,9 @@ export const queue = {
     let total = 0;
     this.items.forEach((item, index) => {
       if (index === this.current - 1) {
-        total += time;
+        total += Number(time);
       } else if (index >= this.current) {
-        total += item.duration;
+        total += Number(item.duration);
       }
     });
 

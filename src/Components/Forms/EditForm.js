@@ -1,20 +1,30 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Styles from "./Styles";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import { connect } from "react-redux";
+import uuidv4 from "uuid/v4";
+
+const defaultData = {
+  label: "Workout",
+  exercises: [{ label: "Exercise 1", duration: 60 }]
+};
 
 class FormDisplay extends Component {
   state = { data: {} };
   componentDidMount() {
     const { id, items } = this.props;
-    const data = Object.assign({}, items[`w${id}`]);
+    let data = null;
 
-    if (id) {
-      this.setState({ data });
+    if (typeof id === "undefined") {
+      data = defaultData;
+    } else {
+      data = Object.assign({}, items[id]);
     }
+
+    this.setState({ data });
   }
 
   onSubmit = values => {
@@ -22,7 +32,24 @@ class FormDisplay extends Component {
     dispatch({ type: "UPDATE_WORKOUT", payload: { id, values } });
   };
 
+  generateId() {
+    return uuidv4();
+  }
+
   render() {
+    const { id, location } = this.props;
+
+    if (typeof id === "undefined") {
+      return (
+        <Redirect
+          to={{
+            pathname: `/edit/${this.generateId()}`,
+            state: { from: location }
+          }}
+        />
+      );
+    }
+
     return (
       <div>
         <Styles>
@@ -107,7 +134,6 @@ class FormDisplay extends Component {
 
 const EditForm = ({ match }) => (
   <div>
-    <h3>ID: {match.params.id}</h3>
     <ConnectedForm id={match.params.id} />
     <Link to="/" className="edit">
       Home

@@ -1,8 +1,7 @@
-import { items } from "../items";
+//import { items } from "../items";
 import { combineReducers } from "redux";
 
 // this will be pulled via ajax
-
 const mainInitialState = {
   pause: false,
   label: "ready",
@@ -28,12 +27,15 @@ const mainReducer = (state = mainInitialState, action) => {
   }
 };
 
-const itemsIntialState = { ...items };
+const workouts = JSON.parse(localStorage.getItem("workouts"));
+
+const itemsIntialState = { ...workouts };
+//const itemsIntialState = { ...items };
 
 const itemsReducer = (state = itemsIntialState, action) => {
   switch (action.type) {
     case "UPDATE_WORKOUT":
-      const id = `w${action.payload.id}`;
+      const id = action.payload.id;
       return Object.assign({}, state, { [id]: action.payload.values });
     default:
       return state;
