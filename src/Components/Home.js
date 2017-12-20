@@ -8,17 +8,9 @@ import NextUp from "./NextUp";
 import Current from "./Current";
 import ItemList from "./ItemList";
 
-export class Home extends Component {
+class Home extends Component {
   didChangeExercise = false;
   didChangeNext = false;
-
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    const { dispatch } = this.props;
-
-    
-    //dispatch({ type: "LOCATION_ID", payload: { id } });
-  }
 
   componentWillReceiveProps(nextProps) {
     const { id } = nextProps.match.params;
