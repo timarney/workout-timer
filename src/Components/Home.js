@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "../App.css";
 import HomeNote from "./HomeNote";
 import Totals from "./Totals";
 import NextUp from "./NextUp";
 import Current from "./Current";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import ItemList from "./ItemList";
 
 export class Home extends Component {
   didChangeExercise = false;
@@ -60,9 +61,7 @@ export class Home extends Component {
           Add Workout
         </Link>
 
-        <Link className="edit" to="/edit/w1">
-          Edit Workout
-        </Link>
+        <ItemList />
       </div>
     );
   }

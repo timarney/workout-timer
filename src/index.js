@@ -24,7 +24,7 @@ const commands = speak({
   }
 });
 
-commands.start();
+//commands.start();
 
 render(<Root store={store} />, document.getElementById("root"));
 registerServiceWorker();

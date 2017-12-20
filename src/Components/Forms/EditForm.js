@@ -15,6 +15,9 @@ const defaultData = {
 class FormDisplay extends Component {
   state = { data: {} };
   componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({ type: "STOP" }, null);
+
     const { id, items } = this.props;
     let data = null;
 
