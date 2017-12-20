@@ -1,6 +1,6 @@
 import React from "react";
 import Main from "./Main";
-import EditForm from "./forms/EditForm";
+import EditForm from "./form/EditForm";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App = () => (
