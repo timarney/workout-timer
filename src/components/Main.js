@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "../App.css";
 import HomeNote from "./HomeNote";
-import Totals from "./Totals";
+import Total from "./Total";
 import NextUp from "./NextUp";
 import Current from "./Current";
 import ItemList from "./ItemList";
@@ -64,7 +64,7 @@ class Main extends Component {
           />
           <div className="workout-title">{title}</div>
 
-          <Totals totalTimeRemaining={totalTimeRemaining} />
+          <Total totalTimeRemaining={totalTimeRemaining} />
           <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
           <button className="stopStart btn" onClick={this.startStop}>
             {pause === true ? "GO" : "STOP"}

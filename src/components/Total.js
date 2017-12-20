@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { secondsToMinutes } from "../library/timeConversion";
 
-class Totals extends Component {
+class Total extends Component {
   render() {
     const { totalTimeRemaining } = this.props;
     return (
@@ -13,4 +13,4 @@ class Totals extends Component {
   }
 }
 
-export default Totals;
+export default Total;
