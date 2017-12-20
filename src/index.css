@@ -29,7 +29,7 @@ body {
 
 .current .currentRemaining {
   font-size: 10rem;
-  padding:1rem;
+  padding: 1rem;
   color: #fff;
 }
 
@@ -70,12 +70,10 @@ body {
   color: #fff;
 }
 
-
 .animate-pop-in {
   opacity: 0;
-  animation: pop-in .5s cubic-bezier(0, 0.9, 0.3, 1.2) forwards;
+  animation: pop-in 0.5s cubic-bezier(0, 0.9, 0.3, 1.2) forwards;
 }
-
 
 @keyframes pop-in {
   0% {
@@ -90,7 +88,7 @@ body {
 
 .animate-fade-in {
   opacity: 0;
-  animation: fade-in .5s ease-in forwards;
+  animation: fade-in 0.5s ease-in forwards;
 }
 
 @keyframes fade-in {
@@ -105,26 +103,56 @@ body {
 }
 
 .btn {
-  font-size:1.2rem;
-  padding: .5rem 2rem;
+  font-size: 1.2rem;
+  padding: 0.5rem 2rem;
   color: #fff;
   background-color: #ff0090;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   margin-bottom: 10px;
-  box-shadow: -5px 5px 0 rgba(0,0,0,.12);
-  border:none;
+  box-shadow: -5px 5px 0 rgba(0, 0, 0, 0.12);
+  border: none;
   border-radius: 1rem;
   margin-bottom: 1rem;
 }
 
-.note{
-  display:flex;
+.note {
+  display: flex;
   justify-content: center;
 }
 
-.edit{
-  margin-top:1rem;
+.edit {
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
-  color:#666666;
+  color: #666666;
+}
+
+/**/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 2em;
+}
+
+li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border: none;
+}
+
+li a {
+  text-decoration: none;
+  color: #000;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+  width: 200px;
+}
+
+li a:hover {
+  font-size: 25px;
+  background: #f6f6f6;
 }

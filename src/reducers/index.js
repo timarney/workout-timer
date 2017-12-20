@@ -1,10 +1,11 @@
-//import { items } from "../items";
+import { items } from "../items";
 import { combineReducers } from "redux";
 
 // this will be pulled via ajax
 const mainInitialState = {
-  pause: false,
+  pause: true,
   label: "ready",
+  currentItem: "",
   currentRemaining: "0",
   totalTime: 0,
   totalTimeRemaining: 0,
@@ -29,8 +30,13 @@ const mainReducer = (state = mainInitialState, action) => {
 
 const workouts = JSON.parse(localStorage.getItem("workouts"));
 
-const itemsIntialState = { ...workouts };
-//const itemsIntialState = { ...items };
+let itemsIntialState = { ...workouts };
+
+if (!Object.keys(itemsIntialState).length) {
+  itemsIntialState = { ...items };
+}
+
+//const
 
 const itemsReducer = (state = itemsIntialState, action) => {
   switch (action.type) {
@@ -42,9 +48,20 @@ const itemsReducer = (state = itemsIntialState, action) => {
   }
 };
 
+const selectedLocationReducer = (state = { id: "w1" }, action) => {
+  switch (action.type) {
+    case "LOCATION_ID":
+      const id = action.payload.id;
+      return Object.assign({}, state, { id: id });
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   items: itemsReducer,
-  main: mainReducer
+  main: mainReducer,
+  locationId: selectedLocationReducer
 });
 
 /*

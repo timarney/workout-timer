@@ -7,16 +7,21 @@ export class List extends Component {
   render() {
     const { items } = this.props;
     const workouts = Object.keys(items);
-
-    return workouts.map(id => {
-      const current = items[id];
-      return (
-        <li key={id}>
-          <Link to={`/${id}`}>{current.label}</Link> |
-          <Link to={`/edit/${id}`}>Edit</Link>
-        </li>
-      );
-    });
+    return (
+      <ul>
+        {workouts.map(id => {
+          const current = items[id];
+          return (
+            <li key={id}>
+              <div>
+                <Link to={`/${id}`}>{current.label}</Link>
+                {/* <Link to={`/edit/${id}`}>edit</Link> */}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
   }
 }
 

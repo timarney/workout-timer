@@ -10,9 +10,9 @@ import { speak } from "./lib/speak";
 import { persist } from "./middleware/persist";
 
 const store = createStore(rootReducer, applyMiddleware(persist));
-const i = store.getState().items["w1"].exercises;
+//const i = store.getState().items["w1"].exercises;
 
-queue.init(i, store, { startIndex: 0 });
+queue.init(store, { startIndex: 0 });
 
 //this will be moved
 const commands = speak({
@@ -24,7 +24,7 @@ const commands = speak({
   }
 });
 
-//commands.start();
+commands.start();
 
 render(<Root store={store} />, document.getElementById("root"));
 registerServiceWorker();

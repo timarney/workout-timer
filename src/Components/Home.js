@@ -12,6 +12,21 @@ export class Home extends Component {
   didChangeExercise = false;
   didChangeNext = false;
 
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    const { dispatch } = this.props;
+    dispatch({ type: "LOCATION_ID", payload: { id } });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { id } = nextProps.match.params;
+    const { dispatch } = this.props;
+
+    if (this.props.locationId !== id) {
+      dispatch({ type: "LOCATION_ID", payload: { id } });
+    }
+  }
+
   componentWillUpdate(nextProps, nextState) {
     const { label: nextLabel, nextUp: next } = nextProps;
     const { label, nextUp } = this.props;
@@ -39,7 +54,8 @@ export class Home extends Component {
       pause,
       currentRemaining,
       totalTimeRemaining,
-      nextUp
+      nextUp,
+      locationId
     } = this.props;
 
     return (
@@ -61,6 +77,9 @@ export class Home extends Component {
           Add Workout
         </Link>
 
+        <Link className="edit" to={`/edit/${locationId}`}>
+          Edit Workout
+        </Link>
         <ItemList />
       </div>
     );
@@ -68,8 +87,10 @@ export class Home extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.locationId);
   return {
-    ...state.main
+    ...state.main,
+    locationId: state.locationId.id
   };
 };
 

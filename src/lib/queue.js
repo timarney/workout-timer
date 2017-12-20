@@ -6,16 +6,31 @@ export const queue = {
   maxItems: 1, //how many items to batch at a time
   current: 0,
   countdown,
+  locationId: null,
+  unsubscribe: () => {},
   dispatch: () => {},
-  init: function(arr, store, options = { startIndex: 0 }) {
-    this.items = arr;
+  init: function(store, options = { startIndex: 0 }) {
+    const locationId = store.getState().locationId.id;
+
+    if (locationId && locationId !== "edit") {
+      console.log("locationId", locationId);
+      this.items = store.getState().items[locationId].exercises;
+    }
 
     this.dispatch = store.dispatch;
     this.current = options.startIndex;
     clearInterval(this.countdown.interval);
+    this.unsubscribe();
 
-    store.subscribe(() => {
+    this.unsubscribe = store.subscribe(() => {
       const { pause } = store.getState().main;
+      const locationId = store.getState().locationId.id;
+
+      if (this.locationId !== locationId) {
+        console.log("new location", typeof locationId, this.locationId);
+        this.locationId = locationId;
+        this.init(store);
+      }
 
       if (pause) {
         this.countdown.pauseTimer();
@@ -46,8 +61,7 @@ export const queue = {
     return false;
   },
   updateStatus(time) {
-    const i = this.items[this.current - 1];
-    const label = i.label;
+    const label = this.currentItem().label;
     const nextUp = this.items[this.current];
     this.dispatch({
       type: "INTERVAL",
@@ -64,14 +78,20 @@ export const queue = {
       this.run();
     }
   },
-  run() {
+  currentItem() {
     const i =
       this.current >= 1
         ? this.items[this.current - 1]
         : this.items[this.current];
 
+    return i;
+  },
+  run() {
     this.doAction(() => {
-      this.countdown.timer(i.duration, this.updateStatus.bind(this));
+      this.countdown.timer(
+        this.currentItem().duration,
+        this.updateStatus.bind(this)
+      );
     });
   },
   finished() {
