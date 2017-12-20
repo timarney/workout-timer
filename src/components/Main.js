@@ -8,7 +8,7 @@ import NextUp from "./NextUp";
 import Current from "./Current";
 import ItemList from "./ItemList";
 
-class Home extends Component {
+class Main extends Component {
   didChangeExercise = false;
   didChangeNext = false;
 
@@ -90,4 +90,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Main);
