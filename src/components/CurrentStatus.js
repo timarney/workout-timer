@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AnimateOnChange from "react-animate-on-change";
 import { secondsToMinutes } from "../library/timeConversion";
 
-class Current extends Component {
+class CurrentStatus extends Component {
   render() {
     const { currentRemaining, didChangeExercise, label } = this.props;
     return (
@@ -22,4 +22,4 @@ class Current extends Component {
   }
 }
 
-export default Current;
+export default CurrentStatus;

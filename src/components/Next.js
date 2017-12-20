@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AnimateOnChange from "react-animate-on-change";
 
-class NextUp extends Component {
+class Next extends Component {
   render() {
     const { didChangeNext, nextUp } = this.props;
     return (
@@ -26,4 +26,4 @@ class NextUp extends Component {
   }
 }
 
-export default NextUp;
+export default Next;

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import HomeNote from "./HomeNote";
 import Total from "./Total";
-import NextUp from "./NextUp";
-import Current from "./Current";
+import Next from "./Next";
+import CurrentStatus from "./CurrentStatus";
 import ItemList from "./ItemList";
 
 class Main extends Component {
@@ -57,7 +57,7 @@ class Main extends Component {
       <div>
         <HomeNote />
         <div className="app">
-          <Current
+          <CurrentStatus
             currentRemaining={currentRemaining}
             didChangeExercise={this.didChangeExercise}
             label={label}
@@ -65,7 +65,7 @@ class Main extends Component {
           <div className="workout-title">{title}</div>
 
           <Total totalTimeRemaining={totalTimeRemaining} />
-          <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
+          <Next nextUp={nextUp} didChangeNext={this.didChangeNext} />
           <button className="stopStart btn" onClick={this.startStop}>
             {pause === true ? "GO" : "STOP"}
           </button>
