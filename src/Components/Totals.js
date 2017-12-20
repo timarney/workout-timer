@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { secondsToMinutes } from "../lib/timeConversion";
+import { secondsToMinutes } from "../library/timeConversion";
 
 class Totals extends Component {
   render() {

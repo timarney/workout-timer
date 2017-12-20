@@ -1,4 +1,4 @@
-import { countdown } from "../lib/countdown";
+import { countdown } from "../library/countdown";
 
 // queue
 export const queue = {
