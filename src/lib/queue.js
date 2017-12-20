@@ -6,15 +6,17 @@ export const queue = {
   maxItems: 1, //how many items to batch at a time
   current: 0,
   countdown,
+  currentTitle: "",
   locationId: null,
   unsubscribe: () => {},
   dispatch: () => {},
   init: function(store, options = { startIndex: 0 }) {
     const locationId = store.getState().locationId.id;
-
+    const item = store.getState().items[locationId];
     if (locationId && locationId !== "edit") {
       console.log("locationId", locationId);
-      this.items = store.getState().items[locationId].exercises;
+      this.currentTitle = item.label;
+      this.items = item.exercises;
     }
 
     this.dispatch = store.dispatch;
@@ -66,6 +68,7 @@ export const queue = {
     this.dispatch({
       type: "INTERVAL",
       payload: {
+        title: this.currentTitle,
         label,
         currentRemaining: time,
         totalTimeRemaining: this.totalTimeRemaining(time),

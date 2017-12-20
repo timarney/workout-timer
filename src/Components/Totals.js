@@ -6,7 +6,7 @@ class Totals extends Component {
     const { totalTimeRemaining } = this.props;
     return (
       <div className="totals">
-        <div className="remaining">Workout Remaining:</div>
+        <div className="remaining">Remaining:</div>
         {secondsToMinutes(totalTimeRemaining)}
       </div>
     );

@@ -15,14 +15,16 @@ export class Home extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     const { dispatch } = this.props;
-    dispatch({ type: "LOCATION_ID", payload: { id } });
+
+    
+    //dispatch({ type: "LOCATION_ID", payload: { id } });
   }
 
   componentWillReceiveProps(nextProps) {
     const { id } = nextProps.match.params;
     const { dispatch } = this.props;
 
-    if (this.props.locationId !== id) {
+    if (this.props.locationId && this.props.locationId !== id) {
       dispatch({ type: "LOCATION_ID", payload: { id } });
     }
   }
@@ -55,6 +57,7 @@ export class Home extends Component {
       currentRemaining,
       totalTimeRemaining,
       nextUp,
+      title,
       locationId
     } = this.props;
 
@@ -67,6 +70,8 @@ export class Home extends Component {
             didChangeExercise={this.didChangeExercise}
             label={label}
           />
+          <div className="workout-title">{title}</div>
+
           <Totals totalTimeRemaining={totalTimeRemaining} />
           <NextUp nextUp={nextUp} didChangeNext={this.didChangeNext} />
           <button className="stopStart btn" onClick={this.startStop}>
@@ -87,7 +92,6 @@ export class Home extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.locationId);
   return {
     ...state.main,
     locationId: state.locationId.id
